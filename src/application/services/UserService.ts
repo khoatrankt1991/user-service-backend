@@ -1,4 +1,4 @@
-import { User } from '@/domain/entities/User';
+import { User, UserPreferences } from '@/domain/entities/User';
 import { UserRepository } from '@/domain/repositories/UserRepository';
 import { CreateUser } from '@/domain/use-cases/CreateUser';
 import { GetUser } from '@/domain/use-cases/GetUser';
@@ -113,7 +113,7 @@ export class UserService {
       requestingUserId,
       requestingUserRole,
       profile: dto.profile,
-      preferences: dto.preferences
+      preferences: dto.preferences as UserPreferences
     });
   }
 
