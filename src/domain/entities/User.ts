@@ -223,6 +223,9 @@ export class User {
     this.props.suspendedAt = undefined;
     this.props.updatedAt = new Date();
   }
+  public get suspendedReason(): string | undefined {
+    return this.props.suspendedReason;
+  }
 
   public verifyEmail(): void {
     this.props.emailVerified = true;
