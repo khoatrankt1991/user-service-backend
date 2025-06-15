@@ -9,7 +9,7 @@ export class Password {
   }
 
   public static isValid(password: string): boolean {
-    return password && password.length >= 8;
+    return Boolean(password) && password.length >= 8;
   }
 
   public getValue(): string {

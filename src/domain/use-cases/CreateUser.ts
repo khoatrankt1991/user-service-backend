@@ -50,10 +50,10 @@ export class CreateUser {
     const profile: UserProfile = {
       firstName: request.firstName,
       lastName: request.lastName,
-      gender: request.gender,
-      phone: request.phone,
-      dateOfBirth: request.dateOfBirth,
-      bio: request.bio
+      ...(request.gender && { gender: request.gender }),
+      ...(request.phone && { phone: request.phone }),
+      ...(request.dateOfBirth && { dateOfBirth: request.dateOfBirth }),
+      ...(request.bio && { bio: request.bio })
     };
 
     // Create user entity
