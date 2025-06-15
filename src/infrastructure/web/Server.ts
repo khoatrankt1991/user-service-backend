@@ -33,7 +33,7 @@ export class Server {
 │ Port:         ${config.port.toString().padEnd(24)} │
 │ Environment:  ${config.nodeEnv.padEnd(24)} │
 │ Database:     ${bootstrapResult.details?.database.connected ? '✅ Connected'.padEnd(24) : '❌ Disconnected'.padEnd(24)} │
-│ API Docs:     ${config.docs.enabled ? `✅ /api-docs`.padEnd(24) : '❌ Disabled'.padEnd(24)} │
+│ API Docs:     ${config.docs.enabled ? '✅ /api-docs'.padEnd(24) : '❌ Disabled'.padEnd(24)} │
 │ Health:       ✅ /health${' '.repeat(15)} │
 ╰─────────────────────────────────────────╯
         `);

@@ -23,12 +23,12 @@ export const createSuccessResponse = <T>(
   message: string = 'Success',
   meta?: Record<string, unknown>
 ): ApiResponse<T> => ({
-  success: true,
-  message,
-  data,
-  meta,
-  timestamp: new Date().toISOString()
-});
+    success: true,
+    message,
+    data,
+    meta,
+    timestamp: new Date().toISOString()
+  });
 
 export const createErrorResponse = (
   message: string,
@@ -55,7 +55,7 @@ export const errorHandler = (
   // Default to 500 server error
   let statusCode = 500;
   let errorCode = 'INTERNAL_ERROR';
-  let message = process.env.NODE_ENV === 'production' 
+  const message = process.env.NODE_ENV === 'production' 
     ? 'Internal server error' 
     : err.message;
 
