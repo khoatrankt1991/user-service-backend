@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: user-service
+  labels:
+    name: user-service
+    app: user-service-backend

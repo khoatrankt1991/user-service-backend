@@ -1,42 +1,38 @@
 version: '3.8'
 
 services:
-  user-service:
-    build: 
+  user-service-dev:
+    build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
+      - "9229:9229"  # Debug port
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - PORT=3000
       - MONGODB_URI=mongodb://mongodb:27017/user_service
-      - JWT_SECRET=your-super-secret-jwt-key-for-docker
+      - MONGODB_TEST_URI=mongodb://mongodb-test:27017/user_service_test
+      - JWT_SECRET=dev-secret-key
       - CORS_ORIGIN=http://localhost:3000
       - API_DOCS_ENABLED=true
+    volumes:
+      - .:/app
+      - /app/node_modules
     depends_on:
       - mongodb
+      - mongodb-test
     restart: unless-stopped
     networks:
       - user-service-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+    command: npm run dev:debug
 
   mongodb:
     image: mongo:6.0
     ports:
       - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
-      - MONGO_INITDB_DATABASE=user_service
     volumes:
-      - mongodb_data:/data/db
-      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongodb_dev_data:/data/db
     restart: unless-stopped
     networks:
       - user-service-network
@@ -45,8 +41,6 @@ services:
     image: mongo:6.0
     ports:
       - "27018:27017"
-    environment:
-      - MONGO_INITDB_DATABASE=user_service_test
     tmpfs:
       - /data/db
     restart: unless-stopped
@@ -54,7 +48,7 @@ services:
       - user-service-network
 
 volumes:
-  mongodb_data:
+  mongodb_dev_data:
 
 networks:
   user-service-network:

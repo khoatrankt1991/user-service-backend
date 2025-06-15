@@ -1,0 +1,22 @@
+FROM node:18-alpine
+
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+# Create app directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev)
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Expose ports (app and debug)
+EXPOSE 3000 9229
+
+# Start development server
+CMD ["npm", "run", "dev"]

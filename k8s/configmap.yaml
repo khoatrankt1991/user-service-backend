@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+  namespace: user-service
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  CORS_ORIGIN: "https://yourdomain.com"
+  API_DOCS_ENABLED: "false"
+  RATE_LIMIT_WINDOW_MS: "900000"
+  RATE_LIMIT_MAX_REQUESTS: "100"

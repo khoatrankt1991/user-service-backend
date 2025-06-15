@@ -28,5 +28,3 @@ src/
 └── interfaces/          # Controllers and presenters
 ```
 
-## Next Steps:
-Run Part 2 to create domain entities and value objects.
