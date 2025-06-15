@@ -1,5 +1,5 @@
 import { UserService, IAuthService } from '@/application/services/UserService';
-import { UserRepository } from '@/domain/repositories/UserRepository';
+import { UserRepository, PaginationResult } from '@/domain/repositories/UserRepository';
 import { User } from '@/domain/entities/User';
 import { Email } from '@/domain/value-objects/Email';
 import { Username } from '@/domain/value-objects/Username';
@@ -219,6 +219,75 @@ describe('UserService', () => {
         'test',
         expect.objectContaining({
           includeInactive: true
+        })
+      );
+    });
+  });
+
+  describe('listUsers', () => {
+    it('should apply all filters correctly', async () => {
+      const queryDto = {
+        role: 'user' as const,
+        isActive: true,
+        emailVerified: true,
+        isSuspended: false,
+        createdAfter: new Date('2023-01-01'),
+        createdBefore: new Date('2023-12-31'),
+        page: 1,
+        limit: 20,
+        sortBy: 'createdAt' as const,
+        sortOrder: 'desc' as const
+      };
+  
+      const mockUser = User.create({
+        username: new Username('testuser1'),
+        email: new Email('test1@example.com'),
+        role: 'user',
+        profile: { firstName: 'Test', lastName: 'User' },
+        addresses: [],
+        socialAccounts: [],
+        emailVerified: true,
+        phoneVerified: false,
+        isActive: true,
+        isSuspended: false,
+        preferences: {
+          language: 'en',
+          timezone: 'UTC',
+          notifications: { email: true, push: true, sms: false },
+          privacy: { profileVisibility: 'public', showEmail: false, showPhone: false }
+        },
+        loginCount: 0,
+        customFields: {}
+      });
+      
+      const mockResult: PaginationResult<User> = {
+        data: [mockUser],
+        pagination: {
+          total: 1,
+          page: 1,
+          limit: 20,
+          pages: 1
+        }
+      };
+      mockUserRepository.findAll.mockResolvedValue(mockResult);
+  
+      const result = await userService.listUsers('admin', queryDto);
+  
+      expect(result).toBe(mockResult);
+      expect(mockUserRepository.findAll).toHaveBeenCalledWith(
+        expect.objectContaining({
+          role: 'user',
+          isActive: true,
+          emailVerified: true,
+          isSuspended: false,
+          createdAfter: queryDto.createdAfter,
+          createdBefore: queryDto.createdBefore
+        }),
+        expect.objectContaining({
+          page: 1,
+          limit: 20,
+          sortBy: 'createdAt',
+          sortOrder: 'desc'
         })
       );
     });
