@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { UserService } from '@/application/services/UserService';
 import { UserController } from '@/interfaces/controllers/UserController';
 import { createAuthMiddleware } from '../middleware/auth';
 import { validateRequest, validateQuery, validateParams } from '../middleware/validation';
@@ -8,10 +7,12 @@ import { CreateUserDtoSchema } from '@/application/dto/CreateUserDto';
 import { UpdateUserDtoSchema } from '@/application/dto/UpdateUserDto';
 import { LoginDtoSchema, LinkSocialAccountDtoSchema } from '@/application/dto/LoginDto';
 import { UserFilterQueryDtoSchema, SearchQueryDtoSchema, UserParamsSchema } from '@/application/dto/QueryDto';
+import { container } from '@/infrastructure/config/container';
 
-export const createUserRoutes = (userService: UserService): Router => {
+export const createUserRoutes = (): Router => {
   const router = Router();
-  const userController = new UserController(userService);
+  const userController = container.getUserController();
+  const userService = container.getUserService();
   const { authenticate, requireAdmin, requireSelfOrAdmin } = createAuthMiddleware(userService);
 
   // Public routes (no authentication required)

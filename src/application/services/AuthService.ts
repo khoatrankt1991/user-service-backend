@@ -28,15 +28,15 @@ export class AuthService implements IAuthService {
   }
 
   public generateAccessToken(payload: Record<string, unknown>): string {
-    return jwt.sign(payload, this.jwtSecret, {
+    return jwt.sign(payload, this.jwtSecret as jwt.Secret, {
       expiresIn: this.jwtExpiresIn
-    });
+    } as jwt.SignOptions);
   }
 
   public generateRefreshToken(payload: Record<string, unknown>): string {
-    return jwt.sign(payload, this.jwtSecret, {
+    return jwt.sign(payload, this.jwtSecret as jwt.Secret, {
       expiresIn: this.jwtRefreshExpiresIn
-    });
+    } as jwt.SignOptions);
   }
 
   public verifyToken(token: string): Record<string, unknown> {
