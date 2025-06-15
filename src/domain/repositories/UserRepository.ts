@@ -29,7 +29,8 @@ export interface PaginationResult<T> {
 }
 
 export interface SearchOptions extends PaginationOptions {
-  includeInactive?: boolean;
+  includeInactive?: boolean | undefined;
+  skip?: number;
 }
 
 export interface UserRepository {
