@@ -179,5 +179,48 @@ describe('UserService', () => {
     });
   });
 
-  
+  describe('searchUsers', () => {
+    it('should allow admin to include inactive users', async () => {
+      const queryDto = {
+        q: 'test',
+        limit: 10,
+        skip: 0,
+        includeInactive: true
+      };
+
+      const mockUsers: User[] = [
+        User.create({
+          username: new Username('testuser1'),
+          email: new Email('test1@example.com'),
+          role: 'user',
+          profile: { firstName: 'Test', lastName: 'User' },
+          addresses: [],
+          socialAccounts: [],
+          emailVerified: true,
+          phoneVerified: false,
+          isActive: true,
+          isSuspended: false,
+          preferences: {
+            language: 'en',
+            timezone: 'UTC',
+            notifications: { email: true, push: true, sms: false },
+            privacy: { profileVisibility: 'public', showEmail: false, showPhone: false }
+          },
+          loginCount: 0,
+          customFields: {}
+        })
+      ];
+      mockUserRepository.search.mockResolvedValue(mockUsers);
+
+      const result = await userService.searchUsers('admin', queryDto);
+
+      expect(result).toBe(mockUsers);
+      expect(mockUserRepository.search).toHaveBeenCalledWith(
+        'test',
+        expect.objectContaining({
+          includeInactive: true
+        })
+      );
+    });
+  });
 })
