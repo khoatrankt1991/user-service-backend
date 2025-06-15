@@ -152,4 +152,32 @@ describe('UserService', () => {
         .rejects.toThrow('Invalid email or password');
     });
   });
+
+  describe('verifyToken', () => {
+    it('should verify valid token', async () => {
+      const payload = {
+        userId: 'user-123',
+        email: 'test@example.com',
+        role: 'user'
+      };
+      mockAuthService.verifyToken.mockReturnValue(payload);
+  
+      const result = await userService.verifyToken('valid-token');
+  
+      expect(result).toEqual(payload);
+      expect(mockAuthService.verifyToken).toHaveBeenCalledWith('valid-token');
+    });
+  
+    it('should throw error for invalid token', async () => {
+      mockAuthService.verifyToken.mockImplementation(() => {
+        throw new Error('Invalid token');
+      });
+  
+      await expect(userService.verifyToken('invalid-token'))
+        .rejects
+        .toThrow('Invalid or expired token');
+    });
+  });
+
+  
 })
