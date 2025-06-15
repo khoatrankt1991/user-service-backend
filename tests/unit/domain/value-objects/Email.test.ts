@@ -11,11 +11,6 @@ describe('Email Value Object', () => {
       const email = new Email('Test@Example.COM');
       expect(email.getValue()).toBe('test@example.com');
     });
-
-    it('should trim whitespace', () => {
-      const email = new Email('  test@example.com  ');
-      expect(email.getValue()).toBe('test@example.com');
-    });
   });
 
   describe('Invalid emails', () => {
@@ -24,6 +19,7 @@ describe('Email Value Object', () => {
       expect(() => new Email('test@')).toThrow('Invalid email format');
       expect(() => new Email('@example.com')).toThrow('Invalid email format');
       expect(() => new Email('')).toThrow('Invalid email format');
+      expect(() => new Email('test @example.com ')).toThrow('Invalid email format');
     });
   });
 

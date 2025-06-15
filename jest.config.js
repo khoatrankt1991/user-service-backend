@@ -8,7 +8,12 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  moduleNameMapping: {
+  // fix for the error: Cannot find module '@/domain/value-objects/Email'
+  // moduleNameMapping: {
+  //   '^@/(.*)$': '<rootDir>/src/$1'
+  // },
+  // to fix the error: Cannot find module '@/domain/value-objects/Email'
+  moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts']

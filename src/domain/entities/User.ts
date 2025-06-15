@@ -67,8 +67,8 @@ export interface UserProps {
   phoneVerified: boolean;
   isActive: boolean;
   isSuspended: boolean;
-  suspendedReason?: string;
-  suspendedAt?: Date;
+  suspendedReason?: string | undefined;
+  suspendedAt?: Date | undefined;
   preferences: UserPreferences;
   lastLoginAt?: Date;
   lastActiveAt?: Date;
@@ -277,13 +277,18 @@ export class User {
     );
 
     if (existingAccountIndex !== -1) {
+      const existingAccount = this.props.socialAccounts[existingAccountIndex];
+      if (!existingAccount) return;
+      
       // Update existing
       this.props.socialAccounts[existingAccountIndex] = {
-        ...this.props.socialAccounts[existingAccountIndex],
+        id: existingAccount.id,
+        provider: existingAccount.provider,
         providerId,
         providerEmail,
-        providerData: { ...this.props.socialAccounts[existingAccountIndex].providerData, ...providerData },
-        linkedAt: new Date()
+        providerData: { ...existingAccount.providerData, ...providerData },
+        linkedAt: new Date(),
+        isActive: existingAccount.isActive
       };
     } else {
       // Add new social account
