@@ -292,4 +292,52 @@ describe('UserService', () => {
       );
     });
   });
+
+  describe('linkSocialAccount', () => {
+    it('should link social account with provider data', async () => {
+      const dto = {
+        provider: 'google' as const,
+        providerId: 'google-123',
+        providerEmail: 'user@gmail.com',
+        providerData: {
+          name: 'Test User',
+          picture: 'https://example.com/avatar.jpg'
+        }
+      };
+
+      const mockUser = User.create({
+        username: new Username('testuser1'),
+        email: new Email('test1@example.com'),
+        role: 'user',
+        profile: { firstName: 'Test', lastName: 'User' },
+        addresses: [],
+        socialAccounts: [],
+        emailVerified: true,
+        phoneVerified: false,
+        isActive: true,
+        isSuspended: false,
+        preferences: {
+          language: 'en',
+          timezone: 'UTC',
+          notifications: { email: true, push: true, sms: false },
+          privacy: { profileVisibility: 'public', showEmail: false, showPhone: false }
+        },
+        loginCount: 0,
+        customFields: {}
+      });
+      mockUserRepository.findById.mockResolvedValue(mockUser);
+      mockUserRepository.findBySocialAccount.mockResolvedValue(null);
+      mockUserRepository.update.mockResolvedValue(mockUser);
+
+      const result = await userService.linkSocialAccount(
+        'user-123',
+        dto,
+        'user-123',
+        'user'
+      );
+
+      expect(result).toBe(mockUser);
+      expect(mockUserRepository.update).toHaveBeenCalled();
+    });
+  });
 })
