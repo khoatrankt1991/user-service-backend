@@ -146,7 +146,7 @@ export class MongoUserRepository implements UserRepository {
       }
 
       const users = await UserModel.find(searchCriteria)
-        .select('username profile.firstName profile.lastName profile.avatarUrl emailVerified role')
+        .select('username email profile.firstName profile.lastName profile.avatarUrl emailVerified role')
         .limit(limit)
         .skip(skip)
         .sort({ score: { $meta: 'textScore' } });
