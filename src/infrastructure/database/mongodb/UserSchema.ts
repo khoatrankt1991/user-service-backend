@@ -98,7 +98,6 @@ const userSchema = new Schema<UserDocument>({
   username: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
     minlength: 3,
     maxlength: 50,
@@ -107,7 +106,6 @@ const userSchema = new Schema<UserDocument>({
   email: {
     type: String,
     required: true,
-    unique: true,
     lowercase: true,
     trim: true,
     match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
