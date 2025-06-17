@@ -5,9 +5,11 @@ import mongoose from 'mongoose';
 let mongod: MongoMemoryServer;
 
 beforeAll(async () => {
-  mongod = await MongoMemoryServer.create();
-  const uri = mongod.getUri();
-  await mongoose.connect(uri);
+  if (!process.env.TEST_DB_URI) {
+    mongod = await MongoMemoryServer.create();
+    process.env.TEST_DB_URI = mongod.getUri();
+  }
+  await mongoose.connect(process.env.TEST_DB_URI!);
 });
 
 afterAll(async () => {
