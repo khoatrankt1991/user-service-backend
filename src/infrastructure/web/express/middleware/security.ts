@@ -29,15 +29,15 @@ export const generalLimiter = createRateLimit(
 
 // Stricter rate limiting for auth endpoints
 export const authLimiter = createRateLimit(
-  15 * 60 * 1000, // 15 minutes
-  5, // 5 attempts
+  config.security.rateLimitAuthWindowMs,
+  config.security.rateLimitAuthMaxRequests,
   'Too many authentication attempts'
 );
 
 // Registration rate limiting
 export const registerLimiter = createRateLimit(
-  60 * 60 * 1000, // 1 hour
-  3, // 3 registrations per hour
+  config.security.rateLimitRegisterWindowMs,
+  config.security.rateLimitRegisterMaxRequests,
   'Too many registration attempts'
 );
 

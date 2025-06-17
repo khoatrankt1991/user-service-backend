@@ -17,6 +17,10 @@ export interface AppConfig {
     bcryptRounds: number;
     rateLimitWindowMs: number;
     rateLimitMaxRequests: number;
+    rateLimitAuthWindowMs: number;
+    rateLimitAuthMaxRequests: number;
+    rateLimitRegisterWindowMs: number;
+    rateLimitRegisterMaxRequests: number;
   };
   cors: {
     origin: string;
@@ -48,7 +52,11 @@ const config: AppConfig = {
   security: {
     bcryptRounds: 12,
     rateLimitWindowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutes
-    rateLimitMaxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100')
+    rateLimitMaxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'),
+    rateLimitAuthWindowMs: parseInt(process.env.RATE_LIMIT_AUTH_WINDOW_MS || '900000'),
+    rateLimitAuthMaxRequests: parseInt(process.env.RATE_LIMIT_AUTH_MAX_REQUESTS || '100'),
+    rateLimitRegisterWindowMs: parseInt(process.env.RATE_LIMIT_REGISTER_WINDOW_MS || '3600000'),
+    rateLimitRegisterMaxRequests: parseInt(process.env.RATE_LIMIT_REGISTER_MAX_REQUESTS || '100')
   },
   
   cors: {
