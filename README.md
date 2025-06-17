@@ -1,6 +1,6 @@
 # User Service Backend
 
-[![Build Status](https://github.com/khoatrankt1991/user-service-backend/workflows/CI/badge.svg)](https://github.com/khoatrankt1991/user-service-backend/actions)
+[![Build Status](https://github.com/khoatrankt1991/user-service-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/khoatrankt1991/user-service-backend/actions)
 [![codecov](https://codecov.io/gh/khoatrankt1991/user-service-backend/branch/main/graph/badge.svg)](https://codecov.io/gh/khoatrankt1991/user-service-backend)
 [![Docker Image](https://img.shields.io/docker/image-size/khoatrankt1991/user-service-backend)](https://hub.docker.com/r/khoatrankt1991/user-service-backend)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
