@@ -50,7 +50,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ): void => {
-  console.error('Error:', err);
+  // console.error('Error:', err);
 
   // Default to 500 server error
   let statusCode = 500;
@@ -60,18 +60,21 @@ export const errorHandler = (
     : err.message;
 
   // Handle specific error types
-  if (err.message.includes('already exists') || err.message.includes('already registered')) {
+  if (err instanceof SyntaxError) {
+    statusCode = 400;
+    errorCode = 'INVALID_JSON';
+  } else if (err.message.includes('already exists') || err.message.includes('already registered')) {
     statusCode = 409;
     errorCode = 'CONFLICT';
   } else if (err.message.includes('not found')) {
     statusCode = 404;
     errorCode = 'NOT_FOUND';
-  } else if (err.message.includes('Invalid') || err.message.includes('required')) {
-    statusCode = 400;
-    errorCode = 'VALIDATION_ERROR';
   } else if (err.message.includes('Unauthorized') || err.message.includes('Invalid email or password')) {
     statusCode = 401;
     errorCode = 'UNAUTHORIZED';
+  } else if (err.message.includes('Invalid') || err.message.includes('required')) {
+    statusCode = 400;
+    errorCode = 'VALIDATION_ERROR';
   } else if (err.message.includes('cannot') || err.message.includes('not allowed') || err.message.includes('admin')) {
     statusCode = 403;
     errorCode = 'FORBIDDEN';
