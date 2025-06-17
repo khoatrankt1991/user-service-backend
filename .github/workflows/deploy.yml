@@ -11,6 +11,7 @@ env:
 jobs:
   deploy:
     name: Deploy to Production
+    if: false # 🔒 Temporarily disabled until VPS is ready
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     
@@ -63,6 +64,7 @@ jobs:
 
   deploy-docker:
     name: Deploy Docker Container
+    if: false  # 🔒 Temporarily disabled until Docker Swarm/VPS is ready
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     
