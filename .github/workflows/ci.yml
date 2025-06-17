@@ -51,24 +51,27 @@ jobs:
         NODE_ENV: test
         JWT_SECRET: test-secret-key
 
-    # - name: Run integration tests
-    #   run: npm run test:integration
-    #   env:
-    #     MONGODB_TEST_URI: mongodb://localhost:27017/user_service_test
-    #     JWT_SECRET: test-secret-key
+    - name: Run integration tests
+      run: npm run test:integration
+      env:
+        NODE_ENV: test
+        JWT_SECRET: test-secret-key
 
-    # - name: Generate test coverage
-    #   run: npm run test:coverage
-    #   env:
-    #     MONGODB_TEST_URI: mongodb://localhost:27017/user_service_test
-    #     JWT_SECRET: test-secret-key
+    - name: Generate test coverage (unit and integration)
+      run: npm run test:coverage
+      env:
+        NODE_ENV: test
+        JWT_SECRET: test-secret-key
 
-    # - name: Upload coverage to Codecov
-    #   uses: codecov/codecov-action@v3
-    #   with:
-    #     file: ./coverage/lcov.info
-    #     flags: unittests
-    #     name: codecov-umbrella
+    - name: Merge coverage (unit and integration)
+      run: npm run coverage:merge
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests,integrationtests
+        name: codecov-umbrella
 
   build:
     name: Build Application
