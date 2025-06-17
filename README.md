@@ -1,8 +1,8 @@
 # User Service Backend
 
-[![Build Status](https://github.com/khoatrankt1991/user-service/workflows/CI/badge.svg)](https://github.com/khoatrankt1991/user-service/actions)
-[![codecov](https://codecov.io/gh/khoatrankt1991/user-service/branch/main/graph/badge.svg)](https://codecov.io/gh/khoatrankt1991/user-service)
-[![Docker Image](https://img.shields.io/docker/image-size/khoatrankt1991/user-service)](https://hub.docker.com/r/khoatrankt1991/user-service)
+[![Build Status](https://github.com/khoatrankt1991/user-service-backend/workflows/CI/badge.svg)](https://github.com/khoatrankt1991/user-service-backend/actions)
+[![codecov](https://codecov.io/gh/khoatrankt1991/user-service-backend/branch/main/graph/badge.svg)](https://codecov.io/gh/khoatrankt1991/user-service-backend)
+[![Docker Image](https://img.shields.io/docker/image-size/khoatrankt1991/user-service-backend)](https://hub.docker.com/r/khoatrankt1991/user-service-backend)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A comprehensive user management service built with **Clean Architecture** principles, TypeScript, Express.js, and MongoDB. This production-ready backend provides complete user authentication, authorization, and management capabilities with comprehensive testing, Docker containerization, and CI/CD pipeline.
