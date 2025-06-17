@@ -126,6 +126,7 @@ jobs:
       with:
         images: ${{ secrets.DOCKER_USERNAME }}/user-service-backend
         tags: |
+          type=semver,pattern=v{{version}}
           type=ref,event=branch
           type=ref,event=pr
           type=sha,prefix=sha-
